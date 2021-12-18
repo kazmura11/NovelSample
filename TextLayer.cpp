@@ -20,22 +20,39 @@ namespace NovelSample {
 			std::cerr << "failed" << std::endl;
 			exit(-1);
 		}
-		char temp[MAX_COL_NUM] = { 0 };
+		//char temp[MAX_COL_NUM] = { 0 };
+		std::string temp;
 		int rowCount = 0;
-		while (filein.getline(temp, MAX_COL_NUM - 1)) {
+		
+		//while (filein.getline(temp, MAX_COL_NUM - 1)) {
+		//	if (filein.fail()) {
+		//		std::cerr << "file read error" << std::endl;
+		//		exit(-1);
+		//	}
+		//	filein.clear();
+		//	rowCount++;
+		//}
+
+		//filein.clear();
+		//filein.seekg(0);
+		//data_ = new char[rowCount][MAX_COL_NUM];
+		//rowCount = 0;
+		//while (filein.getline(temp, MAX_COL_NUM - 1)) {
+		while (std::getline(filein, temp)) {
+			if (filein.fail()) {
+				std::cerr << "file read error" << std::endl;
+				exit(-1);
+			}
+			filein.clear();
+			//strcpy(data_[rowCount], temp);
+			data_.emplace_back(temp);
 			rowCount++;
 		}
-		filein.clear();
-		filein.seekg(0);
-		data_ = new char[rowCount][MAX_COL_NUM];
-		rowCount = 0;
-		while (filein.getline(temp, MAX_COL_NUM - 1)) {
-			strcpy(data_[rowCount], temp);
-			rowCount++;
-		}
+		std::cout << "rowCount: " << rowCount << std::endl;
 	}
+
 	TextLayer::~TextLayer() {
-		delete[] data_;
+		//delete[] data_;
 	}
 
 	void TextLayer::update() {
@@ -126,7 +143,7 @@ namespace NovelSample {
 	void TextLayer::draw() {
 		// バッファはその時のループのタイミングで格納されているところまでである。基本的に2回のループで1文字である。
 		for (int i = 0; i < STRBUF_HEIGHT; i++) {
-			DxLib::DrawString(MARGIN_LEFT, i * FONT_SIZE, stringBuf_[i], GetColor(255, 255, 255));
+			DxLib::DrawString(MARGIN_LEFT, MARGIN_TOP + i * FONT_SIZE, stringBuf_[i], GetColor(255, 255, 255));
 		}
 	}
 

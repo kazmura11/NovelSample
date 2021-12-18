@@ -22,10 +22,12 @@ namespace NovelSample {
 	}
 
 	void Fps::draw() {
+#ifdef _DEBUG
 		if (framePerSecond_ != 0) {
 			DxLib::DrawFormatString(8, 480 - 24 * 2, static_cast<int>(DxLib::GetColor(255, 255, 255)),
 				"FPS %.1f", framePerSecond_);
 		}
+#endif
 	}
 
 	void Fps::wait() {

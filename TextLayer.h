@@ -1,11 +1,15 @@
 #pragma once
+#include <vector>
+#include <string>
+
 namespace NovelSample {
 	// 仮想テキストバッファの横サイズ縦サイズ
 	constexpr int STRBUF_WIDTH = 48;
 	constexpr int STRBUF_HEIGHT = 20;
-	constexpr int MARGIN_LEFT = 8;
+	constexpr int MARGIN_TOP = 8;
+	constexpr int MARGIN_LEFT = 16;
 	constexpr int FONT_SIZE = 24;
-	constexpr int MAX_COL_NUM = 256;
+	//constexpr int MAX_COL_NUM = 256;  // 制限撤廃
 	constexpr char TextPath[256] = "./Script/novel.txt";
 
 	class TextLayer {
@@ -23,21 +27,23 @@ namespace NovelSample {
 		bool isWaitingForKey_;  // ボタン押し待ちフラグ
 		char stringBuf_[STRBUF_HEIGHT][STRBUF_WIDTH + 1];  // 仮想テキストバッファ
 		void lineBreak();
-		char (*data_)[MAX_COL_NUM];  // 本文格納領域 *dataをnewして[][256]にする
-		/*
+		//char (*data_)[MAX_COL_NUM];  // 本文格納領域 *dataをnewして[][256]にする
+		std::vector<std::string> data_;  // 若干遅くなるがたかだか文字列なので大勢に影響なし
+		// C++の場合[]演算子のオーバーロードが素晴らしいのでソースコードの影響がほぼない
+		
 		// 補足：次のような構造を想定している。実際には./Script/novel.txtから読み込む
-		char data_[][MAX_COL_NUM] = {
-			"　ゲームプログラムを習得するための一番の近道はとにかく沢山プログラムを組む",
-			"ことである。\\B\\N" ,
-			"　ﾌﾟﾛｸﾞﾗﾑの参考書にはゲームのプログラムの方法なんて何も書かれていない、\\B",
-			"変数、\\B配列、\\B関数、\\Bループ、\\B条件分岐…\\Bこれらすべての説明はゲームで何に使うか",
-			"なんてどこにも書いていない、\\Bせいぜい住所録を題材にした例がある程度である。\\B" ,
-			"\\C　プログラムは習うより慣れろなのでプログラムを組むに当たって少しでも知識が",
-			"つけば後はそこからは掘り下げ、広げていけば良いわけで、\\Bプログラムの参考書を",
-			"読んでいて少しでも何か出来るような気がしたらそこでとにかくプログラム",
-			"を打ってみることが大事である。\\E",
-		};
-		*/
+		// 実装を変えたので実際にはstd::vector<string>だが、イメージとしては下記のまま
+		//char data_[][MAX_COL_NUM] = {
+		//	"　ゲームプログラムを習得するための一番の近道はとにかく沢山プログラムを組む",
+		//	"ことである。\\B\\N" ,
+		//	"　ﾌﾟﾛｸﾞﾗﾑの参考書にはゲームのプログラムの方法なんて何も書かれていない、\\B",
+		//	"変数、\\B配列、\\B関数、\\Bループ、\\B条件分岐…\\Bこれらすべての説明はゲームで何に使うか",
+		//	"なんてどこにも書いていない、\\Bせいぜい住所録を題材にした例がある程度である。\\B" ,
+		//	"\\C　プログラムは習うより慣れろなのでプログラムを組むに当たって少しでも知識が",
+		//	"つけば後はそこからは掘り下げ、広げていけば良いわけで、\\Bプログラムの参考書を",
+		//	"読んでいて少しでも何か出来るような気がしたらそこでとにかくプログラム",
+		//	"を打ってみることが大事である。\\E",
+		//};
 	};
 }
 
